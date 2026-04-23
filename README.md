@@ -5,12 +5,9 @@ Scans port ranges and identifies open ports on a target system.
 
 ## Features
 - Takes target IP address as input
-- Configurable timeout parameter
+- Configurable timeout parameter optional input
 - Scans ports from 1 to 1024
-- Identifies open and closed ports
-
-## How to Run
-python port_scanner.py
+- Identifies open and closed ports of the targeted machine
 
 ## Concepts Used
 - Socket programming

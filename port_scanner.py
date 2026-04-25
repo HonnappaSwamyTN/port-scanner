@@ -1,10 +1,11 @@
 import socket
 
 class PortScanner:
-    def __init__(self, target,time_out=0.05):
+    def __init__(self, target,time_out=0.05,banner_timeout=2):
         # store the target IP here
         self.target_ip=target
         self.time_out=time_out
+        self.banner_timeout=banner_timeout
         self.open_ports=[]
 
     def scan_port(self, port):
@@ -27,20 +28,17 @@ class PortScanner:
             val=self.scan_port(i)
 
             if val:
+               
                 print(f"Port {i} is Open")
                 self.open_ports.append(i)
                 banner=self.grab_banner(i)
                 if banner:
                     print(f"Banner {banner}")
-            else:
-                print(f"Port {i} is closed")
-        print("Open ports are : ")
-        print(self.open_ports)
 
     def grab_banner(self, port):
         try:
             with socket.socket() as s:
-                s.settimeout(self.time_out)
+                s.settimeout(self.banner_timeout)
                 if s.connect_ex((self.target_ip,port)) == 0:
                     data = s.recv(1024)
                     return data.decode()
@@ -50,5 +48,6 @@ class PortScanner:
 
 
 target = input("Enter target IP: ")
-scanner = PortScanner("google.com", time_out=1)
+scanner = PortScanner(target)
 scanner.scan_range(1, 1024)
+print("----------END----------")
